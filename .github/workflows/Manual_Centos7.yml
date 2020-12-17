@@ -9,14 +9,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Update configs
+    - name: Configure Host
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
     - name: Pull Docker Image From Quay 
       run: docker pull quay.io/msaju/centos7-gluster-build
-    - name: Docker running
-      run: docker run --name container_gluster docker pull quay.io/msaju/centos7-gluster-build
+    - name: Running Build in Centos7 Container
+      run: docker run --name container_gluster quay.io/msaju/centos7-gluster-build
     - name: Copy Artifactory to Host
       run: docker cp container_gluster:/github/TEST_G/extras/LinuxRPM .
     - name: Upload Artifactory
