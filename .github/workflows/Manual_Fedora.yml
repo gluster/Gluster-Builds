@@ -1,0 +1,26 @@
+name: Fedora Latest Gluster Build (quay)
+
+on: [workflow_dispatch]
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Update configs
+      run:  ./Setup_Host.sh
+    - name: Pull Docker Image From Quay 
+      run: docker pull quay.io/msaju/fedora-gluster-build
+    - name: Running Container
+      run: docker run --name container_gluster quay.io/msaju/fedora-gluster-build
+    - name: Copy Artifactory to Host
+      run: docker cp container_gluster:/github/glusterfs/extras/LinuxRPM .
+    - name: Upload Artifactory
+      uses: actions/upload-artifact@v2
+      with:
+          name: gluster-rpms
+          path: LinuxRPM/*.rpm
+          retention-days: 1
