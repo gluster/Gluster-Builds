@@ -1,0 +1,27 @@
+name: Gluster Build (centos8/quay)
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure Host
+      run: |
+             chmod +x Setup_Host.sh
+             ./Setup_Host.sh
+    - name: Pull Docker Image From Quay 
+      run: docker pull quay.io/msaju/centos8-gluster-build
+    - name: Running Build in Centos8 Container
+      run: docker run --name container_gluster quay.io/msaju/centos8-gluster-build
+    - name: Copy Artifactory to Host
+      run: docker cp container_gluster:/github/TEST_G/extras/LinuxRPM .
+    - name: Upload Artifactory
+      uses: actions/upload-artifact@v2
+      with:
+          name: gluster-rpms
+          path: LinuxRPM/*.rpm
+          retention-days: 1
