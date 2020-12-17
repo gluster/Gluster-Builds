@@ -1,4 +1,4 @@
-name: Fedora Latest Gluster Build (quay)
+name: Gluster Build (fedora/quay)
 
 on: [workflow_dispatch]
 
