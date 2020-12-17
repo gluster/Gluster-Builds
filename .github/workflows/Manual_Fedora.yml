@@ -10,13 +10,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Update configs
+    - name: Configure Host
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
     - name: Pull Docker Image From Quay 
       run: docker pull quay.io/msaju/fedora-gluster-build
-    - name: Running Container
+    - name: Running Build in Fedora Container
       run: docker run --name container_gluster quay.io/msaju/fedora-gluster-build
     - name: Copy Artifactory to Host
       run: docker cp container_gluster:/github/glusterfs/extras/LinuxRPM .
