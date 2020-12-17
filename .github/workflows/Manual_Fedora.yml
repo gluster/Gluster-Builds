@@ -11,7 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Update configs
-      run:  ./Setup_Host.sh
+      run: |
+           chmod +x Setup_Host.sh
+          ./Setup_Host.sh
     - name: Pull Docker Image From Quay 
       run: docker pull quay.io/msaju/fedora-gluster-build
     - name: Running Container
