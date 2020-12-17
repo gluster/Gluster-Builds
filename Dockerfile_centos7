@@ -1,0 +1,31 @@
+FROM centos:7
+
+LABEL project="gluster-build"
+LABEL maintainer "sajmoham@redhat.com"
+
+RUN yum clean all
+
+RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+RUN yum --enablerepo=extras install epel-release-7 autoconf automake bison cmockery2-devel\
+    dos2unix flex selinux-policy-devel rsync libcurl-devel \
+    fuse-devel glib2-devel libacl-devel libaio-devel libattr-devel    \
+    libcurl-devel libtirpc-devel     \
+    libtool libxml2-devel lvm2-devel make openssl-devel pkgconfig     \
+    pyliblzma python-devel python-eventlet python-netifaces           \
+    python-paste-deploy python-simplejson python-sphinx python-webob  \
+    pyxattr readline-devel rpm-build systemtap-sdt-devel \
+    tar userspace-rcu-devel git userspace-rcu redhat-rpm-config\
+    rpcgen make libuuid-devel deltarpm firewalld -y   
+
+RUN yum -y update
+ 
+RUN yum clean all
+
+CMD ["/usr/sbin/init"]
+
+COPY ./startscript.sh /
+
+RUN chmod +x /startscript.sh
+
+CMD ./startscript.sh
