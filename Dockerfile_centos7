@@ -1,7 +1,7 @@
 FROM centos:7
 
-LABEL project="gluster-build"
-LABEL maintainer "sajmoham@redhat.com"
+LABEL project="centos7-gluster-build"
+LABEL maintainer "gluster-users@gluster.org"
 
 RUN yum clean all
 
