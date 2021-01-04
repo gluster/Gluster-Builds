@@ -1,4 +1,4 @@
-name: Gluster Build (fedora/quay)
+name: Nightly Build (fedora/quay)
 
 on:
   schedule:
