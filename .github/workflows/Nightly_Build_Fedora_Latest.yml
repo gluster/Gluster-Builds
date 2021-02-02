@@ -17,9 +17,9 @@ jobs:
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
     - name: Pull Docker Image From Quay 
-      run: docker pull quay.io/msaju/fedora-gluster-build
+      run: docker pull quay.io/gluster/fedora-gluster-build
     - name: Running Build in Fedora Container
-      run: docker run --name container_gluster quay.io/msaju/fedora-gluster-build
+      run: docker run --name container_gluster quay.io/gluster/fedora-gluster-build
     - name: Copy Artifactory to Host
       run: docker cp container_gluster:/github/glusterfs/extras/LinuxRPM .
     - name: Upload Artifactory
