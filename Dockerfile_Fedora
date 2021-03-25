@@ -12,7 +12,7 @@ RUN dnf install automake autoconf libtool flex bison openssl-devel  \
     librdmacm-devel readline-devel lvm2-devel glib2-devel git     \
     userspace-rcu-devel libcmocka-devel libacl-devel sqlite-devel \
     fuse-devel redhat-rpm-config rpcgen libtirpc-devel make \
-    fedora-packager rpmdevtools libuuid-devel firewalld libcurl-devel -y
+    fedora-packager rpmdevtools libuuid-devel firewalld liburing libcurl-devel -y
 
 CMD ["/usr/sbin/init"]
 
