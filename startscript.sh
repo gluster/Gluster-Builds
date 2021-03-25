@@ -7,7 +7,7 @@ git config --global user.name  "msaju"
 git clone https://github.com/gluster/glusterfs.git
 cd glusterfs
 ./autogen.sh
-./configure
+./configure --disable-linux-io_uring
 make
 cd extras/LinuxRPM
 make glusterrpms
