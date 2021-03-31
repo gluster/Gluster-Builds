@@ -5,7 +5,7 @@ LABEL maintainer "sajmoham@redhat.com"
 ENV DEBIAN_FRONTEND=nonintercative
 
 #ENTRYPOINT ["!/bin/bash"] 
-#CMD ["!/bin/bash"]
+
 
 RUN apt-get update && apt-get install -y \
 git make automake autoconf libtool flex bison pkg-config sed \
@@ -23,3 +23,5 @@ RUN cd gluster/
 RUN chmod +x gluster/build.sh
 
 CMD gluster/build.sh ubuntu focal 8 8.4 1
+
+CMD ["!/bin/bash"]
