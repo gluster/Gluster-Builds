@@ -1,0 +1,29 @@
+name: Gluster Build (ubuntu)
+
+on: [workflow_dispatch]
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure Host
+      run: |
+             chmod +x Setup_Host.sh
+             ./Setup_Host.sh
+    - name: Pull Docker Image (build docker image)
+      run: cp Dockerfile_Ubuntu Dockerfile
+      run: docker build -t gubuntu:2.0 .
+    - name: Running Build in ubuntu Container
+      run: docker run -it --name container_gluster gubuntu:2.0
+    - name: Copy Artifactory to Host
+      run: docker cp container_gluster:gluster/ubuntu-focal-Glusterfs-8.4/build/*.*deb .
+    - name: Upload Artifactory
+      uses: actions/upload-artifact@v2
+      with:
+          name: gluster-rpms
+          path: LinuxRPM/*.rpm
+          retention-days: 1
