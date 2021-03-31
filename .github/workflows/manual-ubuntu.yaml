@@ -19,7 +19,7 @@ jobs:
             cp Dockerfile_Ubuntu Dockerfile
             docker build -t gubuntu:2.0 .
     - name: Running Build in ubuntu Container
-      run: docker run -it --name container_gluster gubuntu:2.0
+      run: docker run --name container_gluster gubuntu:2.0
     - name: Copy Artifactory to Host
       run: docker cp container_gluster:gluster/ubuntu-focal-Glusterfs-8.4/build/*.*deb .
     - name: Upload Artifactory
