@@ -14,10 +14,8 @@ jobs:
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
-    - name: Pull Docker Image (build docker image)
-      run: |
-            cp Dockerfile_Ubuntu Dockerfile
-            docker build -t gubuntu:2.0 .
+    - name: Pull Docker Image from quay
+      run:  docker pull quay.io/gluster/ubuntu-gluster-build
     - name: Running Build in ubuntu Container
       run: docker run --name container_gluster gubuntu:2.0
     - name: Copy Artifactory to Host
