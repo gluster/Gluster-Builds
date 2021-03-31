@@ -17,7 +17,7 @@ jobs:
     - name: Pull Docker Image from quay
       run:  docker pull quay.io/gluster/ubuntu-gluster-build
     - name: Running Build in ubuntu Container
-      run: docker run --name container_gluster gubuntu:2.0
+      run: docker run --name container_gluster quay.io/gluster/ubuntu-gluster-build
     - name: Copy Artifactory to Host
       run: docker cp container_gluster:gluster/ubuntu-focal-Glusterfs-8.4/build/*.*deb .
     - name: Upload Artifactory
