@@ -17,12 +17,10 @@ jobs:
     - name: Pull Docker Image from quay
       run:  docker pull quay.io/gluster/ubuntu-gluster-build
     - name: Running Build in ubuntu Container
-      run: docker run --name container_gluster quay.io/gluster/ubuntu-gluster-build
-    - name: Copy Artifactory to Host
-      run: docker cp container_gluster:gluster/ubuntu-focal-Glusterfs-8.4/build/*.*deb .
+      run:  docker run --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
-          name: gluster-rpms
-          path: LinuxRPM/*.rpm
+          name: gluster-deb
+          path: /build-out/*.*deb
           retention-days: 1
