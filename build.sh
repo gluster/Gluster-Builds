@@ -59,4 +59,9 @@ echo "Building source package.."
 cd ../glusterfs-${version}
 debuild -us -uc
 
-#!/bin/bash
+cd ../
+
+echo "Copying source package.."
+pwd
+ls
+     cp *.*deb  /out/.
