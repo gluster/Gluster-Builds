@@ -20,23 +20,26 @@ echo "Building glusterfs-${version}-${release} for ${flavor}"
 
 cd build
 
-TGZS=(`ls ~/glusterfs-${version}-?-*/build/glusterfs-${version}.tar.gz`)
-echo ${TGZS[0]}
+echo "Checking out Gluster Devel latest "
+git clone https://github.com/gluster/glusterfs.git
 
-if [ -z ${TGZS[0]} ]; then
-        echo "wget https://download.gluster.org/pub/gluster/glusterfs/${series}/${version}/glusterfs-${version}.tar.gz"
-        wget https://download.gluster.org/pub/gluster/glusterfs/${series}/${version}/glusterfs-${version}.tar.gz
+cd glusterfs/
 
-else
-        echo "found ${TGZS[0]}, using it..."
-        cp ${TGZS[0]} .
-fi
+echo "Configuring and building Glusterfs "
+./autogen.sh
+
+./configure --enable-fusermount --enable-gnfs --disable-linux-io_uring
+
+echo "Running Make Dist"
+make dist
+
+cp glusterfs-${version}.tar.gz ../../
+
+echo "Untaring.."
+tar -xzvf glusterfs-${version}.tar.gz
 
 echo "Creating link file.."
 ln -s glusterfs-${version}.tar.gz glusterfs_${version}.orig.tar.gz
-
-echo "Untaring.."
-tar xpf glusterfs-${version}.tar.gz
 
 # Changelogs needed for building are maintained in a separate repo.
 # the repo has to be clone and updated properly so we can copy the changelogs so far.
@@ -62,6 +65,4 @@ debuild -us -uc
 cd ../
 
 echo "Copying source package.."
-pwd
-ls
      cp *.*deb  /out/.
