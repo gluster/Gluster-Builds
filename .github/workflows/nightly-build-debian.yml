@@ -1,0 +1,27 @@
+name: Nightly Build (debian/quay)
+
+on:
+  schedule:
+  - cron:  ' 40 0 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure Host
+      run: |
+             chmod +x Setup_Host.sh
+             ./Setup_Host.sh
+    - name: Pull Docker Image from quay
+      run:  docker pull quay.io/gluster/debian-gluster-build
+    - name: Running Build in ubuntu Container
+      run:  docker run --name container_gluster -v /build-out:/out quay.io/gluster/debian-gluster-build
+    - name: Upload Artifactory
+      uses: actions/upload-artifact@v2
+      with:
+          name: gluster-deb
+          path: /build-out/*.*deb
+          retention-days: 1
