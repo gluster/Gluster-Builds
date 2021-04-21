@@ -9,7 +9,7 @@ RUN dnf -y --setopt tsflags=nodocs install automake autoconf libtool flex bison 
     libxml2-devel python-devel libaio-devel libibverbs-devel librdmacm-devel readline-devel \
     glib2-devel git  userspace-rcu-devel libcmocka-devel libacl-devel fuse-devel rpcgen make \
     fedora-packager rpmdevtools libuuid-devel firewalld redhat-rpm-config libtirpc-devel \
-    libcurl-devel liburing-devel -y
+    libcurl-devel liburing-devel
 
 RUN yum -y update --setopt tsflags=nodocs && yum clean all && rm -rf /var/cache/yum
 
