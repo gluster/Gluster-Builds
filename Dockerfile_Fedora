@@ -6,8 +6,8 @@ LABEL project="gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
 
 RUN dnf -y --setopt tsflags=nodocs install automake autoconf libtool flex bison openssl-devel  \
-    libxml2-devel python-devel libaio-devel libibverbs-devel librdmacm-devel readline-devel \
-    glib2-devel git  userspace-rcu-devel libcmocka-devel libacl-devel fuse-devel rpcgen make \
+    libxml2-devel python-devel libaio-devel librdmacm-devel readline-devel \
+    glib2-devel git  userspace-rcu-devel libacl-devel fuse-devel rpcgen make \
     fedora-packager rpmdevtools libuuid-devel firewalld redhat-rpm-config libtirpc-devel \
     libcurl-devel liburing-devel
 
