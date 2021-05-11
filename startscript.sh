@@ -2,12 +2,9 @@
 
 mkdir github
 cd github
-git config --global user.email "sajmoham@redhat.com"
-git config --global user.name  "msaju"
-git clone https://github.com/gluster/glusterfs.git
+git clone --depth 1 https://github.com/gluster/glusterfs.git
 cd glusterfs
 ./autogen.sh
-./configure --disable-linux-io_uring
-make
+./configure
 cd extras/LinuxRPM
 make glusterrpms
