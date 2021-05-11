@@ -3,16 +3,15 @@ FROM fedora:latest
 
 
 LABEL project="gluster-build"
-LABEL maintainer "sajmoham@redhat.com"
+LABEL maintainer "gluster-users@gluster.org"
 
-RUN dnf -y update && dnf clean all
+RUN dnf -y --setopt tsflags=nodocs install automake autoconf libtool flex bison openssl-devel  \
+    libxml2-devel python-devel libaio-devel readline-devel \
+    glib2-devel git  userspace-rcu-devel libacl-devel fuse-devel rpcgen make \
+    fedora-packager rpmdevtools libuuid-devel firewalld redhat-rpm-config libtirpc-devel \
+    libcurl-devel liburing-devel
 
-RUN dnf install automake autoconf libtool flex bison openssl-devel  \
-    libxml2-devel python-devel libaio-devel libibverbs-devel      \
-    librdmacm-devel readline-devel lvm2-devel glib2-devel git     \
-    userspace-rcu-devel libcmocka-devel libacl-devel sqlite-devel \
-    fuse-devel redhat-rpm-config rpcgen libtirpc-devel make \
-    fedora-packager rpmdevtools libuuid-devel firewalld liburing libcurl-devel -y
+RUN dnf -y update --setopt tsflags=nodocs && yum clean all && rm -rf /var/cache/yum
 
 CMD ["/usr/sbin/init"]
 
