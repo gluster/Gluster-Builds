@@ -1,7 +1,9 @@
 name: Quay Monthly Trigger 
 
-#Manual trigger for testing any errors with Github auth
-on: [workflow_dispatch]
+#Added monthly Cron for 14th of every month
+on:
+  schedule:
+    - cron:  '0 0 14 * *'
 
 jobs:
   run:
