@@ -2,3 +2,4 @@
 # This file is used to autamatically "check in" time logs from github actions which will trigger quay builds in gluster root path
 # The github actions monthly trigger is availabe @ .github/workflows/quay-monthly-trigger.yml
 Quay Build is triggered on Fri Jun 11 10:02:12 UTC 2021
+Quay Build is triggered on Fri Jun 11 10:17:52 UTC 2021
