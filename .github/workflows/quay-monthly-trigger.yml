@@ -3,7 +3,7 @@ name: Quay Monthly Trigger
 #Added monthly Cron for 14th of every month
 on:
   schedule:
-    - cron:  '0 0 14 * *'
+    - cron:  '0 0 15 * *'
 
 jobs:
   run:
