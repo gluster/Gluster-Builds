@@ -14,6 +14,8 @@ mkdir build packages
 
 echo "Building glusterfs-${version}-${release} for ${flavor}"
 
+git config --global user.email "gluster-devel@gluster.org"
+git config --global user.name "Gluster"
 
 cd build
 
