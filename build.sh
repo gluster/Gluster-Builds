@@ -6,9 +6,6 @@ series=$3
 version=$4
 release=$5
 
-git config --global user.email "sajmoham@redhat.com"
-git config --global user.name  "msaju"
-
 mkdir ${os}-${flavor}-Glusterfs-${version}
 
 cd ${os}-${flavor}-Glusterfs-${version}
