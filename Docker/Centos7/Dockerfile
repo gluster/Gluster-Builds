@@ -14,8 +14,8 @@ RUN yum -y update --setopt tsflags=nodocs && yum clean all && rm -rf /var/cache/
 
 CMD ["/usr/sbin/init"]
 
-COPY ./startscript.sh /
+COPY ./startscript-centos7.sh /
 
-RUN chmod +x /startscript.sh
+RUN chmod +x /startscript-centos7.sh
 
-CMD ./startscript.sh
+CMD ./startscript-centos7.sh
