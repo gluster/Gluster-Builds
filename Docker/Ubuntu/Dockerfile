@@ -22,5 +22,3 @@ RUN cd gluster/
 RUN chmod +x gluster/build.sh
 
 CMD gluster/build.sh ubuntu focal 9 10dev 1
-
-CMD ["!/bin/bash"]
