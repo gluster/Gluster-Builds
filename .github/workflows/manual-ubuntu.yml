@@ -14,6 +14,8 @@ jobs:
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
+    - name: Cleanup Old Docker images if any
+      run:  docker system prune -af
     - name: Pull Docker Image from quay
       run:  docker pull quay.io/gluster/ubuntu-gluster-build
     - name: Running Build in ubuntu Container
