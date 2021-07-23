@@ -27,7 +27,12 @@ cd glusterfs/
 echo "Configuring and building Glusterfs "
 ./autogen.sh
 
-./configure --enable-fusermount --enable-gnfs --disable-linux-io_uring
+if [ "${os}" -eq ubuntu ]
+then
+        ./configure --enable-fusermount --enable-gnfs
+else
+        ./configure --enable-fusermount --enable-gnfs --disable-linux-io_uring
+fi
 
 echo "Running Make Dist"
 make dist
