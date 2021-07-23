@@ -8,3 +8,5 @@ cd glusterfs
 ./configure
 cd extras/LinuxRPM
 make glusterrpms
+echo "Copying source package.."
+     cp *.*rpm  /out/.
