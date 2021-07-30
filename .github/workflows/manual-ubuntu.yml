@@ -1,4 +1,4 @@
-name: Gluster Build (ubuntu)
+name: Ubuntu Build (Dockerfile)
 
 on: [workflow_dispatch]
 
@@ -14,12 +14,13 @@ jobs:
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
-    - name: Cleanup Old Docker images if any
-      run:  docker system prune -af
-    - name: Pull Docker Image from quay
-      run:  docker pull quay.io/gluster/ubuntu-gluster-build
+    - name: Build from Dockerfile
+      run: |
+            cp build.sh Docker/Ubuntu/
+            cd Docker/Ubuntu
+            docker build -t gluster-build .
     - name: Running Build in ubuntu Container
-      run:  docker run --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
+      run:  docker run --name container_gluster -v /build-out:/out gluster-build
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
