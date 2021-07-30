@@ -23,5 +23,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           name: gluster-rpms
-          path: LinuxRPM/*.rpm
+          path: /build-out/*.rpm
           retention-days: 1
