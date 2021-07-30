@@ -8,3 +8,5 @@ cd glusterfs
 ./configure --disable-linux-io_uring
 cd extras/LinuxRPM
 make glusterrpms
+echo "Copying source package.."
+     cp *.*rpm  /out/.
