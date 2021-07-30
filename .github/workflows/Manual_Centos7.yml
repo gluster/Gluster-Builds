@@ -1,4 +1,4 @@
-name: Gluster Build (centos7/quay)
+name: Gluster Build Centos7(using Dockerfile)
 
 on: [workflow_dispatch]
 
@@ -13,15 +13,16 @@ jobs:
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
-    - name: Pull Docker Image From Quay 
-      run: docker pull quay.io/gluster/centos7-gluster-build
+    - name: Build from Dockerfile
+      run: |
+            cp startscript-centos7.sh Docker/Centos7/
+            cd Docker/Centos7
+            docker build -t gluster-build .  
     - name: Running Build in Centos7 Container
-      run: docker run --name container_gluster quay.io/gluster/centos7-gluster-build
-    - name: Copy Artifactory to Host
-      run: docker cp container_gluster:/github/glusterfs/extras/LinuxRPM .
+      run: docker run --name container_gluster -v /build-out:/out gluster-build
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
           name: gluster-rpms
-          path: LinuxRPM/*.rpm
+          path: /build-out/*.rpm
           retention-days: 1
