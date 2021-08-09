@@ -5,13 +5,13 @@ FROM fedora:latest
 LABEL project="gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
 
-RUN dnf -y --setopt tsflags=nodocs install automake autoconf libtool flex bison openssl-devel  \
-    libxml2-devel python-devel libaio-devel readline-devel \
+RUN dnf -y --setopt tsflags=nodocs --setopt install_weak_deps=0 install automake autoconf libtool flex bison openssl-devel  \
+    openssl libxml2-devel python-devel libaio-devel readline-devel \
     glib2-devel git  userspace-rcu-devel libacl-devel fuse-devel rpcgen make \
-    fedora-packager rpmdevtools libuuid-devel firewalld redhat-rpm-config libtirpc-devel \
-    libcurl-devel liburing-devel
+    rpm-build libuuid-devel firewalld libtirpc-devel \
+    libcurl-devel liburing-devel && yum clean all
 
-RUN dnf -y update --setopt tsflags=nodocs && yum clean all && rm -rf /var/cache/yum
+RUN dnf -y update --setopt tsflags=nodocs --setopt install_weak_deps=0 && yum clean all && rm -rf /var/cache/yum
 
 CMD ["/usr/sbin/init"]
 
