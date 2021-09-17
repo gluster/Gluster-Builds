@@ -43,7 +43,7 @@ jobs:
             fi
             if [[ "${{ github.event.inputs.buildosflavor }}" == "ubuntu" ]]; then
             docker pull quay.io/gluster/ubuntu-gluster-build
-            docker run --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
+            docker run --security-opt seccomp=unconfined --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
 
             fi
             if [[ "${{ github.event.inputs.buildosflavor }}" == "debian" ]]; then
