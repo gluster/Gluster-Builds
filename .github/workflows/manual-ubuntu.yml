@@ -20,7 +20,7 @@ jobs:
             cd Docker/Ubuntu
             docker build -t gluster-build .
     - name: Running Build in ubuntu Container
-      run:  docker run --name container_gluster -v /build-out:/out gluster-build
+      run:  docker run --security-opt seccomp=unconfined --name container_gluster -v /build-out:/out gluster-build
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
