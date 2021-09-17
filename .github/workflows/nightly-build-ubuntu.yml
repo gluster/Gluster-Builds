@@ -20,7 +20,7 @@ jobs:
     - name: Pull Docker Image from quay
       run:  docker pull quay.io/gluster/ubuntu-gluster-build
     - name: Running Build in ubuntu Container
-      run:  docker run --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
+      run:  docker run --security-opt seccomp=unconfined --name container_gluster -v /build-out:/out quay.io/gluster/ubuntu-gluster-build
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
