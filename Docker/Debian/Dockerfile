@@ -23,4 +23,4 @@ RUN cd gluster/
 
 RUN chmod +x gluster/build.sh
 
-CMD gluster/build.sh debian bullseye 9 10dev 1
+CMD gluster/build.sh debian bullseye 9 11dev 1
