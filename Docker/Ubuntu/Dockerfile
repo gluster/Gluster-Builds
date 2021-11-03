@@ -21,4 +21,4 @@ RUN cd gluster/
 
 RUN chmod +x gluster/build.sh
 
-CMD gluster/build.sh ubuntu impish 9 10dev 1
+CMD gluster/build.sh ubuntu impish 9 11dev 1
