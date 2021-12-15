@@ -10,3 +10,4 @@ Quay Build is triggered on Sun Aug 15 00:12:22 UTC 2021
 Quay Build is triggered on Wed Sep 15 00:12:50 UTC 2021
 Quay Build is triggered on Fri Oct 15 00:13:23 UTC 2021
 Quay Build is triggered on Mon Nov 15 00:14:41 UTC 2021
+Quay Build is triggered on Wed Dec 15 00:15:43 UTC 2021
