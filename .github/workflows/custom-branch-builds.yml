@@ -1,0 +1,50 @@
+name: Custom Branch Builds 
+
+on: 
+  workflow_dispatch:
+  
+    inputs:
+      buildosflavor:
+        description: 'Select the OS Flavour - centos7 (Only Supported) '
+        required: true
+        options: ['centos7']
+        default: 'centos7'
+     
+      branchesflavor:
+        description: 'Select the Gluster Branch: eg:- devel, v10.1, v9.5,v8.6'
+        required: true
+        options: ['devel', 'v10.1', 'v9.5']
+        default: 'devel'
+
+env:
+  BRANCH: "${{ github.event.inputs.branchesflavor }}"
+  
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Configure Host
+      run: |
+             chmod +x Setup_Host.sh
+             ./Setup_Host.sh
+    
+    - name: Cleanup Old Docker images if any
+      run:  docker system prune -af
+      
+    - name: Selecting build based on OS flavour
+      run: |
+            if [[ "${{ github.event.inputs.buildosflavor }}" == "centos7" ]]; then
+                  cp startscript-centos7.sh Docker/Centos7/
+                  cd Docker/Centos7
+                  docker build -t gluster-build .  
+                  docker run --name container_gluster -v /build-out:/out gluster-build $BRANCH
+            fi
+                  
+    - name: Upload Artifactory
+      uses: actions/upload-artifact@v2
+      with:
+          name: gluster-rpms
+          path: /build-out/*.rpm
+          retention-days: 3
