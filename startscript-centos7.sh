@@ -14,7 +14,7 @@ fi
 mkdir github
 cd github
 echo "cloning branch" $BRANCH
-git clone --branch $BRANCH --depth 1 https://github.com/gluster/glusterfs.git
+git clone --branch $BRANCH --depth 1 --single-branch https://github.com/gluster/glusterfs.git
 cd glusterfs
 ./autogen.sh
 ./configure --disable-linux-io_uring
