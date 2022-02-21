@@ -18,4 +18,6 @@ COPY ./startscript-centos7.sh /
 
 RUN chmod +x /startscript-centos7.sh
 
-CMD ./startscript-centos7.sh
+ENTRYPOINT ["/startscript-centos7.sh"]
+
+CMD ["devel"]
