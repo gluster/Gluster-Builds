@@ -5,6 +5,7 @@ flavor=$2
 series=$3
 version=$4
 release=$5
+branch=$6
 
 mkdir ${os}-${flavor}-Glusterfs-${version}
 
@@ -19,8 +20,8 @@ git config --global user.name "Gluster"
 
 cd build
 
-echo "Checking out Gluster Devel latest "
-git clone https://github.com/gluster/glusterfs.git
+echo "Cloning Gluster branch - ${branch} "
+git clone --branch ${branch} https://github.com/gluster/glusterfs.git
 
 cd glusterfs/
 
