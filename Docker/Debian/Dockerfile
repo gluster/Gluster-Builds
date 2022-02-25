@@ -1,4 +1,6 @@
-FROM debian:bullseye
+ARG MYAPP_IMAGE=debian:bullseye
+
+FROM $MYAPP_IMAGE
 
 LABEL project="debian-buster-gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
@@ -23,4 +25,6 @@ RUN cd gluster/
 
 RUN chmod +x gluster/build.sh
 
-CMD gluster/build.sh debian bullseye 9 11dev 1
+ENTRYPOINT ["gluster/build.sh"]
+
+CMD ["debian","bullseye", "10", "10.1", "1", "11dev"]
