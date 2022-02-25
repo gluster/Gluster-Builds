@@ -1,4 +1,4 @@
-FROM centos:8
+FROM quay.io/centos/centos:stream8
 
 LABEL project="centos8-gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
@@ -21,4 +21,6 @@ COPY ./startscript.sh /
 
 RUN chmod +x /startscript.sh
 
-CMD /startscript.sh
+ENTRYPOINT ["/startscript.sh"]
+
+CMD ["devel"]
