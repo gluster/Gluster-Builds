@@ -1,4 +1,6 @@
-FROM ubuntu:21.10
+ARG MYAPP_IMAGE=ubuntu:22.04
+
+FROM $MYAPP_IMAGE
 
 LABEL project="ubuntu-latest-gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
@@ -21,4 +23,6 @@ RUN cd gluster/
 
 RUN chmod +x gluster/build.sh
 
-CMD gluster/build.sh ubuntu impish 9 11dev 1
+ENTRYPOINT ["gluster/build.sh"]
+
+CMD ["ubuntu","impish", "10", "10.1", "1", "11dev"]
