@@ -5,10 +5,16 @@ on:
   
     inputs:
       buildosflavor:
-        description: 'Select the OS Flavour - centos7 (Only Supported) '
+        description: 'Select the OS Flavour - centos / fedora / ubuntu / debian'
         required: true
-        options: ['centos7']
-        default: 'centos7'
+        options: ['centos', 'fedora', 'ubuntu', 'debian']
+        default: 'fedora'
+     
+      buildosver:
+        description: 'Select the OS version - centos (7/stream8) / fedora(Fxx/latest) / ubuntu(impish/jammy) / debian(bullseye)'
+        required: true
+        options: ['7', 'stream8', 'F33', 'focal', 'bullseye']
+        default: 'F33'
      
       branchesflavor:
         description: 'Select the Gluster Branch: eg:- devel, v10.1, v9.5,v8.6'
@@ -17,7 +23,11 @@ on:
         default: 'devel'
 
 env:
+  OS: "${{ github.event.inputs.buildosflavor }}"
+  VER: "${{ github.event.inputs.buildosver }}"
   BRANCH: "${{ github.event.inputs.branchesflavor }}"
+  
+
   
 jobs:
   Build:
@@ -29,22 +39,88 @@ jobs:
       run: |
              chmod +x Setup_Host.sh
              ./Setup_Host.sh
-    
-    - name: Cleanup Old Docker images if any
-      run:  docker system prune -af
-      
+  
     - name: Selecting build based on OS flavour
+      env:
+        OS_VER: '${{ env.OS }}:${{ env.VER }}'
+        run: echo $OS_VER
       run: |
-            if [[ "${{ github.event.inputs.buildosflavor }}" == "centos7" ]]; then
+            if [[ ${{ env.OS_VER }} == 'centos:7'  ]]; then
+                  #centos 7 : No need to select OS versions. ONLY Branch is required.
                   cp startscript-centos7.sh Docker/Centos7/
                   cd Docker/Centos7
                   docker build -t gluster-build .  
+                  #docker run --name container_gluster -v /build-out:/out gluster-build $BRANCH
+            fi
+            
+            if [[ ${{ env.OS_VER }}  == 'centos:stream8' ]]; then
+                  cp startscript.sh Docker/Centos8/
+                  cd Docker/Centos8
+                  docker build -t gluster-build .
                   docker run --name container_gluster -v /build-out:/out gluster-build $BRANCH
             fi
-                  
+            
+            if [[ ${{ env.OS }} == 'fedora' ]]; then
+                    echo "Building for Fedora"
+                    cp startscript.sh Docker/Fedora/
+                    cd Docker/Fedora
+                    VERSION=$(echo "${OS_VER//F}")
+                    docker build -t gluster-build --build-arg MYAPP_IMAGE=$VERSION .
+                    docker run --name container_gluster -v /build-out:/out gluster-build $BRANCH
+            fi
+            
+            if [[ ${{ env.OS }} == 'ubuntu' ]]; then
+                    echo "Building for Ubuntu"            
+                    cp build.sh Docker/Ubuntu/
+                    cd Docker/Ubuntu
+                    SUB='dev'
+                    #when devel is passed, ubuntu requires the tag to build
+                    if [[ "$BRANCH" == *"$SUB"* ]]; then
+                      #devel means latest tag from the repo
+                      DEVEL_BR=$(git ls-remote --tags --refs --sort="v:refname" https://github.com/gluster/glusterfs | tail -n1 | sed 's/.*\///')
+                      BR=$(echo "${DEVEL_BR:1}")
+                      #Devel is always the unreleased branch, we need a released branch no
+                      TEMP=${BR%dev}
+                      SER=$((TEMP-1))
+                      MIN=1
+                    else
+                      BR=$(echo "${BRANCH:1}")
+                      SER=${BR%.*}
+                      MIN=${BRANCH#*.}
+                      DEVEL_BR=$BRANCH
+                    fi
+                
+                    docker build -t gluster-build --build-arg MYAPP_IMAGE=$OS_VER .
+                    docker run --security-opt seccomp=unconfined --name container_gluster -v /build-out:/out gluster-build $OS $VER $SER $BR $MIN $DEVEL_BR
+            fi
+            
+            if [[ ${{ env.OS }} == 'debian' ]]; then
+                    echo "Building for Debian"            
+                    cp build.sh Docker/Debian/
+                    cd Docker/Debian
+                    SUB='dev'
+                    #when devel is passed, debian requires the tag to build
+                    if [[ "$BRANCH" == *"$SUB"* ]]; then
+                      #devel means latest tag from the repo
+                      DEVEL_BR=$(git ls-remote --tags --refs --sort="v:refname" https://github.com/gluster/glusterfs | tail -n1 | sed 's/.*\///')
+                      BR=$(echo "${DEVEL_BR:1}")
+                      #Devel is always the unreleased branch, we need a released branch no
+                      TEMP=${BR%dev}
+                      SER=$((TEMP-1))
+                      MIN=1
+                    else
+                      BR=$(echo "${BRANCH:1}")
+                      SER=${BR%.*}
+                      MIN=${BRANCH#*.}
+                      DEVEL_BR=$BRANCH
+                    fi
+                    docker build -t gluster-build --build-arg MYAPP_IMAGE=$OS_VER .
+                    docker run --security-opt seccomp=unconfined --name container_gluster -v /build-out:/out gluster-build $OS $VER $SER $BR $MIN $DEVEL_BR
+            fi
+    
     - name: Upload Artifactory
       uses: actions/upload-artifact@v2
       with:
           name: gluster-rpms
-          path: /build-out/*.rpm
-          retention-days: 3
+          path: /build-out/*.*
+          retention-days: 1
