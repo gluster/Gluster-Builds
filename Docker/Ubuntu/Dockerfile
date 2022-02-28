@@ -25,4 +25,4 @@ RUN chmod +x gluster/build.sh
 
 ENTRYPOINT ["gluster/build.sh"]
 
-CMD ["ubuntu","impish", "10", "10.1", "1", "11dev"]
+CMD ["ubuntu","impish", "10", "10.1", "1", "v11dev"]
