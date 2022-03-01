@@ -27,4 +27,4 @@ RUN chmod +x gluster/build.sh
 
 ENTRYPOINT ["gluster/build.sh"]
 
-CMD ["debian","bullseye", "10", "10.1", "1", "v11dev"]
+CMD ["debian","bullseye", "10", "11dev", "1", "v11dev"]
