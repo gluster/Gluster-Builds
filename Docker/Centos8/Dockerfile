@@ -1,4 +1,4 @@
-FROM quay.io/centos/centos:stream8
+FROM centos:8.4.2105
 
 LABEL project="centos8-gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
