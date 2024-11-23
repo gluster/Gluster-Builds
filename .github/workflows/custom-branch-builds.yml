@@ -7,19 +7,22 @@ on:
       buildosflavor:
         description: 'Select the OS Flavour - centos / fedora / ubuntu / debian'
         required: true
+        type: choice
         options: ['centos', 'fedora', 'ubuntu', 'debian']
         default: 'fedora'
      
       buildosver:
         description: 'Select the OS version - centos (7/stream8) / fedora(Fxx/latest) / ubuntu(impish/jammy) / debian(bullseye)'
         required: true
-        options: ['7', 'stream8', 'F33', 'focal', 'bullseye']
-        default: 'F33'
+        type: choice
+        options: ['7', 'stream8', 'F38', 'focal', 'bullseye']
+        default: 'F38'
      
       branchesflavor:
         description: 'Select the Gluster Branch: eg:- devel, v10.1, v9.5,v8.6'
         required: true
-        options: ['devel', 'v10.1', 'v9.5']
+        type: choice
+        options: ['devel', 'v11.1', 'v10.5', 'v9.6']
         default: 'devel'
 
 env:
@@ -34,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Configure Host
       run: |
              chmod +x Setup_Host.sh
@@ -119,7 +122,7 @@ jobs:
             fi
     
     - name: Upload Artifactory
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
           name: gluster-rpms
           path: /build-out/*.*
