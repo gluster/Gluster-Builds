@@ -3,7 +3,7 @@ FROM centos:7
 LABEL project="centos7-gluster-build"
 LABEL maintainer "gluster-users@gluster.org"
 
-RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+COPY ./epel.repo /etc/yum.repos.d/
 
 RUN yum -y --setopt tsflags=nodocs --enablerepo=extras install epel-release-7 autoconf automake bison cmockery2-devel \
     dos2unix flex selinux-policy-devel rsync libcurl-devel fuse-devel glib2-devel libacl-devel libaio-devel libattr-devel \
