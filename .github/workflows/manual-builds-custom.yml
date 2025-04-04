@@ -7,6 +7,7 @@ on:
       buildosflavor:
         description: 'centos7 / centos8 / fedora / ubuntu / debian'
         required: true
+        type: choice
         options: ['centos7', 'centos8', 'fedora', 'ubuntu', 'debian']
         default: 'fedora'
 
@@ -15,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Configure Host
       run: |
              chmod +x Setup_Host.sh
