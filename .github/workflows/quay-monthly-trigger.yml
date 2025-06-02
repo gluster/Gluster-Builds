@@ -12,13 +12,13 @@ jobs:
 
     steps:
       
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # Add an update to repo file to trigger quay build...
       - run: echo "Quay Build is triggered on $(date)" >> ./Docker/monthly-trigger-log.txt
 
       # ...and then use the action as you would normally do
-      - uses: EndBug/add-and-commit@v7
+      - uses: EndBug/add-and-commit@v9
         with:
           message: 'GitHub Actions Monthly Trigger'
           add: 'monthly-trigger-log.txt --force'
