@@ -2,7 +2,7 @@ name: Nightly Build (fedora/quay)
 
 on:
   schedule:
-  - cron:  ' 45 0 * * *'
+  - cron:  '45 0 * * *'
 
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Configure Host
       run: |
              chmod +x Setup_Host.sh
@@ -21,7 +21,7 @@ jobs:
     - name: Running Build in Fedora Container
       run: docker run --name container_gluster -v /build-out:/out quay.io/gluster/fedora-gluster-build
     - name: Upload Artifactory
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
           name: gluster-rpms
           path: /build-out/*.rpm
